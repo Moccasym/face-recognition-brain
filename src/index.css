@@ -4,10 +4,14 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-    background: linear-gradient(to right, rgb(54, 58, 176) , rgb(53, 157, 44)); /* Standard syntax */
+    background: linear-gradient(to right, rgb(97, 178, 255) , rgb(249, 255, 133));/* Standard syntax */
 }
 
+button{
+  cursor: pointer;
+}
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+ 
