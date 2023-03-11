@@ -4,8 +4,8 @@ import Navigation from './components/Navigation/Navigation';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
-//import Particle from './components/Particles/Particles';
-import Particles from "react-tsparticles";
+import Particle from './components/Particles/Particles';
+
 
 
 
@@ -14,7 +14,7 @@ function App() {
   
   return (
     <div className="App">
-      <Particles id="tsparticles" url="http://foo.bar/particles.json"  />
+      <Particle />
       <Navigation />
       <Logo />
       <Rank />
