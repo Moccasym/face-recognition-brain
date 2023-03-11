@@ -14,7 +14,7 @@ function App() {
   
   return (
     <div className="App">
-      <Particle />
+      <Particle className='particle'/>
       <Navigation />
       <Logo />
       <Rank />
