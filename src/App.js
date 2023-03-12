@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import Navigation from './components/Navigation/Navigation';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import Particle from './components/Particles/Particles';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+
 import Clarifai from 'clarifai';
 
 process.nextTick = setImmediate;
@@ -13,16 +16,7 @@ const app = new Clarifai.App({
   apiKey: 'b4f74c7cfa714ef1bc048820c65660ee'
  });
 
- ClarifaiApp.models.predict(Clarifai.GENERAL_MODEL, "https://samples.clarifai.com/metro-north.jpg").then(
-      function(response) {
-        // do something with response
-        console.log(response);
-      },
-      function(err) {
-        console.log(err);
-        // there was an error
-      }
-    );
+
   
 
 class App extends Component {
@@ -30,15 +24,27 @@ class App extends Component {
     super();
     this.state = {
       input:'',
+      imageUrl: ''
     }
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({input: event.target.value});
   }
 
   onButtonSubmit = () => {
-    console.log('click');
+    this.setState({imageUrl: this.state.input})
+    app.models.predict(
+      Clarifai.FACE_DETECT_MODEL, 
+      this.state.input)
+      .then(
+      function(response) {
+        console.log('hi');
+        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+      },
+      function(err) {
+      }
+    );
 
   }
 
@@ -53,7 +59,7 @@ class App extends Component {
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}
         />
-        {/*<FaceRecognition /> */}
+        <FaceRecognition imageUrl={this.state.imageUrl}/>
       </div>
     );
   }
