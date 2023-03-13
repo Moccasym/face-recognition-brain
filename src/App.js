@@ -54,18 +54,47 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
+
+    //CLARIFAI CODE Old
     app.models
       .predict(
-        Clarifai.FACE_DETECT_MODEL, 
+        'face-detection', 
         this.state.input)
         .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+        .catch(err =>console.log(err));
 
-          // console.log('hi');
-          // console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-        .catch(err =>console.log(err))
-  }
+    //new
+  //   app.models
+  //     .predict(
+  //       {
+  //         id: 'face-detection',
+  //         name: 'face-detection',
+  //         version: '6dc7e46bc9124c5c8824be4822abe105',
+  //         type: 'visual-detector',
+  //       }, this.state.input)
+  //     .then(response => {
+  //       console.log('hi', response)
+  //       if (response) {
+  //         fetch('http://localhost:3000/image', {
+  //           method: 'put',
+  //           headers: {'Content-Type': 'application/json'},
+  //           body: JSON.stringify({
+  //             id: this.state.user.id
+  //           })
+  //         })
+  //           .then(response => response.json())
+  //           .then(count => {
+  //             this.setState(Object.assign(this.state.user, { entries: count}))
+  //           })
 
-  render() {
+  //       }
+  //       this.displayFaceBox(this.calculateFaceLocation(response))
+  //     })
+  //     .catch(err => console.log(err));
+
+   }
+
+  render(){
     return (
       <div className="App">
         <Particle className='particle'/>
