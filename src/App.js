@@ -7,18 +7,13 @@ import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import Particle from './components/Particles/Particles';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import SignIn from './components/SignIn/SignIn';
 
 import Clarifai from 'clarifai';
-
-//process.nextTick = setImmediate;
 
 const app = new Clarifai.App({
   apiKey: 'b4f74c7cfa714ef1bc048820c65660ee'
  });
-
-
-  
-
 class App extends Component {
   constructor() {
     super();
@@ -43,10 +38,8 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    //console.log(box);
     this.setState({box: box})
   }
-
 
   onInputChange = (event) => {
     this.setState({input: event.target.value});
@@ -55,15 +48,15 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
 
-    //CLARIFAI CODE Old
+    //CLARIFAI CODE Old but working 
     app.models
       .predict(
         'face-detection', 
         this.state.input)
         .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
         .catch(err =>console.log(err));
-
-    //new
+  }
+  //new Clarifai for later
   //   app.models
   //     .predict(
   //       {
@@ -92,13 +85,12 @@ class App extends Component {
   //     })
   //     .catch(err => console.log(err));
 
-   }
-
   render(){
     return (
       <div className="App">
         <Particle className='particle'/>
         <Navigation />
+        <SignIn />
         <Logo />
         <Rank />
         <ImageLinkForm 
@@ -106,6 +98,8 @@ class App extends Component {
           onButtonSubmit={this.onButtonSubmit}
         />
         <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
+      
+        
       </div>
     );
   }
