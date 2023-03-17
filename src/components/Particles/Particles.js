@@ -5,7 +5,7 @@ const Particle = () => {
     return (
         <>
           <div>...</div>
-          <ParticlesBg color="#FFFFFF" type="cobweb" bg={true} num={150}/>
+          <ParticlesBg color="#FFFFFF" type="cobweb" bg={true} num={200}/>
         </>
         )
 };
