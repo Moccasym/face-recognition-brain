@@ -97,6 +97,7 @@ onRouteChange = (route) => {
   this.setState({route: route});
 }
 
+
   render(){
     const { isSignedIn, imageUrl, route, box } = this.state;
     return (
