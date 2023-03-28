@@ -6,24 +6,25 @@ class SignIn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            singInEmail: '',
+            signInEmail: '',
             signInPassword: ''
-        };
-    };
+        }
+    }
+
     onEmailChange = (event) => {
-        this.setState({singInEmail: event.target.value})
+        this.setState({signInEmail: event.target.value})
     };
     onPasswordChange = (event) => {
         this.setState({signInPassword: event.target.value})
     };
-    onSubmitSignIn = (event) => {
-        fetch('http://localhost:3004/signin', {
+    onSubmitSignIn = () => {
+        fetch('http://localhost:3000/signin', {
             method: 'post',
-            header: {'Content-type': 'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                email: this.state.singInEmail,
+                email: this.state.signInEmail,
                 password: this.state.signInPassword
-            })
+            }),
          });
         this.props.onRouteChange('home');
     }
@@ -39,21 +40,23 @@ class SignIn extends React.Component {
                     <legend className="f1 fw6 ph0 mh0">Sign In</legend>
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                        <input onChange= {this.onEmailChange}
+                        <input 
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="email" 
                             name="email-address"  
                             id="email-address" 
+                            onChange= {this.onEmailChange}
                         />    
                     </div>
                     <div className="mv3">
                         <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                         <input 
-                            onCHange= {this.onPasswordChange}
+                            
                             className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="password" 
                             name="password"  
                             id="password" 
+                            onChange= {this.onPasswordChange}
                         />
                         <p onClick={() => onRouteChange('register')} href="#0" className="pointer f6 ma2 link dim black db">Register</p>
                     </div>
