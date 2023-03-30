@@ -43,6 +43,7 @@ class App extends Component {
         entries: data.entries,
         joined: data.joined
     }})
+    
     }
 
   // to thest if front and backend can "talk" to each other
@@ -82,7 +83,12 @@ class App extends Component {
       .predict(
         'face-detection', 
         this.state.input)
-        .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+        .then(response => {
+          if(response){
+            fetch('http://localhost:3000/image')
+          }
+          this.displayFaceBox(this.calculateFaceLocation(response))
+        })
         .catch(err =>console.log(err));
   }
   //new Clarifai for later
@@ -119,6 +125,8 @@ onRouteChange = (route) => {
     this.setState({isSignedIn: false  })
   } else if (route === 'home') {
     this.setState({isSignedIn: true })
+    
+    //console.log(JSON.stringify(this.loadUser(this.state.user[0])))
   }
   this.setState({route: route});
 }
@@ -133,7 +141,7 @@ onRouteChange = (route) => {
         { this.state.route === 'home' 
         ?<div>
         <Logo />
-        <Rank />
+        <Rank name={this.state.user.name} entries={this.state.user.entries}/> 
         <ImageLinkForm 
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}
@@ -142,7 +150,7 @@ onRouteChange = (route) => {
         </div>
         : (
           route === 'SignIn' 
-          ? <SignIn onRouteChange={this.onRouteChange}/>
+          ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         ) 
 
