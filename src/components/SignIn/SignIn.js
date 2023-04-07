@@ -30,7 +30,14 @@ class SignIn extends React.Component {
          .then(user => {
             if (user) {
                 this.props.loadUser(user)
-                this.props.onRouteChange('home');
+                if(user === 'wrong credentials'){
+                    this.props.onRouteChange('SignIn');
+                    alert('This person does not exist or you put the wrong password! Try again')
+                } else{
+                    console.log(user);
+                    this.props.onRouteChange('home');
+                }
+                
             }
          })
     }
@@ -52,6 +59,7 @@ class SignIn extends React.Component {
                             name="email-address"  
                             id="email-address" 
                             onChange= {this.onEmailChange}
+                            
                         />    
                     </div>
                     <div className="mv3">
@@ -63,6 +71,7 @@ class SignIn extends React.Component {
                             name="password"  
                             id="password" 
                             onChange= {this.onPasswordChange}
+                            
                         />
                         <p onClick={() => onRouteChange('register')} href="#0" className="pointer f6 ma2 link dim black db">Register</p>
                     </div>
