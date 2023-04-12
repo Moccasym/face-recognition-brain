@@ -10,11 +10,8 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 
-import Clarifai from 'clarifai';
 
-const app = new Clarifai.App({
-  apiKey: 'b4f74c7cfa714ef1bc048820c65660ee'
- });
+
 
  const initialState = {
         input:'',
@@ -93,12 +90,14 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-
-    //CLARIFAI CODE Old but working 
-    app.models
-      .predict(
-        'face-detection', 
-        this.state.input)
+        fetch('http://localhost:3000/imageurl', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            input: this.state.input
+          })
+        })
+        .then(response => response.json())
         .then(response => {
           if(response){
             fetch('http://localhost:3000/image', {
@@ -106,7 +105,7 @@ class App extends Component {
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
                   id: this.state.user.id
-              }),
+              })
            })
           .then(response => response.json())
           .then(count => {
